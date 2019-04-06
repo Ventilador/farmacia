@@ -1,0 +1,28 @@
+<md-dialog aria-label="Crear Remedios">
+    <form>
+        <div class="modal-header">
+            <h3 class="modal-title" id="modal-title">Crear Nuevo Remedio</h3>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <input autofocus tab-to-enter tabindex="1" type="text" ng-change="ctrl.cambio()" ng-model="ctrl.remedio.Nombre" class="form-control" placeholder="Nombre del remedio">
+                <div ng-show="ctrl.nombreInvalido" class="invalid-feedback">
+                    El nombre del remedio ya existe
+                </div>
+            </div>
+            <div class="form-group">
+                <input tab-to-enter tabindex="2" type="text" ng-change="ctrl.cambio()" ng-model="ctrl.remedio.Droga" class="form-control" placeholder="Nombre de la droga">
+                <div ng-show="ctrl.drogaInvalida" class="invalid-feedback">
+                    El nombre de la droga ya existe
+                </div>
+            </div>
+            <div class="form-group">
+                <input tab-to-enter tabindex="3" type="text" ng-model="ctrl.presentacionInicial" class="form-control" placeholder="Presentacion">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-warning" ng-click="ctrl.cancelar()">Cancelar</button>
+            <button type="submit" class="btn btn-success" ng-click="ctrl.guardar()" tabindex="4" ng-disabled="!ctrl.isValid()">Guardar</button>
+        </div>
+    </form>
+</md-dialog>

@@ -1,0 +1,30 @@
+<table class="table table-bordered ">
+    <thead>
+        <tr>
+            <th>Numero</th>
+            <th>Medico</th>
+            <th>Remedio</th>
+            <th>Cantidad</th>
+            <th>Farmaco</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="row in ctrl.rows()  track by $index">
+            <td>
+                <div><span ng-bind="row.id"></div></span>
+            </td>
+            <td>
+                <div><span ng-bind="row.medico"></div></span>
+            </td>
+            <td>
+                <div><span ng-bind="row.remedio.Nombre"></div></span>
+            </td>
+            <td>
+                <div><span ng-bind="row.presentacion"></div></span>
+            </td>
+            <td>
+                <div><span ng-bind="row.remedio.Droga"></div></span>
+            </td>
+        </tr>
+    </tbody>
+</table>

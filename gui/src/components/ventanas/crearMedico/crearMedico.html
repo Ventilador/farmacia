@@ -1,0 +1,26 @@
+<md-dialog aria-label="Crear Medico">
+    <form>
+        <div class="modal-header">
+            <h3 class="modal-title" id="modal-title">Crear Nuevo Medico</h3>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <input type="text" ng-model="ctrl.nombre" autofocus tab-to-enter tabindex="1" ng-change="ctrl.reset()" class="form-control" placeholder="Nombre del Medico">
+
+            </div>
+            <div class="form-group">
+                <input type="text" ng-model="ctrl.apellido" tab-to-enter tabindex="2" ng-change="ctrl.reset()" class="form-control" placeholder="Apellido del medico">
+            </div>
+            <div class="form-group">
+                <div ng-show="ctrl.medicoRepetido" class="invalid-feedback">
+                    El medico/a ya existe
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-warning" ng-click="ctrl.cancelar()">Cancelar</button>
+            <button type="submit" class="btn btn-success" tabindex="3" ng-click="ctrl.guardar()" ng-disabled="!ctrl.isValid">Guardar</button>
+        </div>
+    </form>
+</md-dialog>

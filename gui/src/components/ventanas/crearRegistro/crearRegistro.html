@@ -1,0 +1,65 @@
+<md-dialog aria-label="Crear Registro">
+  <form>
+      <div class="modal-header">
+          <h3 class="modal-title" id="modal-title">Crear Nuevo Registro</h3>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+              <md-autocomplete
+                md-search-text-change="ctrl.filtrarRemedios(filtroRemedios)" 
+                md-selected-item-change="ctrl.seleccionado(item, presentacionesCtrl)" 
+                md-no-cache="true" 
+                tabindex="1" 
+                md-min-length="0"
+                placeholder="Seleccionar remedio" 
+                autofocus 
+                md-item-text="item.toString()"
+                md-search-text="filtroRemedios" 
+                md-items="item in ctrl.remedios">
+                  <md-item-template>
+                      <span  md-highlight-text="filtroRemedios">{{item.toString()}}</span>
+                  </md-item-template>
+              </md-autocomplete>
+          </div>
+          <div class="form-group">
+              <md-autocomplete
+                md-selected-item-change="ctrl.presentacion = item" 
+                md-search-text-change="ctrl.filtrarPresentaciones(filtroPresentacion)" 
+                md-selected-item-change="medicosCtrl.scope.$evalAsync(medicosCtrl.focus)" 
+                md-no-cache="true" 
+                tabindex="2" 
+                md-min-length="0"
+                placeholder="Seleccionar presentacion"
+                md-init="presentacionesCtrl = $mdAutocompleteCtrl"
+                md-search-text="filtroPresentacion" 
+                md-items="item in ctrl.presentaciones">
+                  <md-item-template>
+                      <span md-highlight-text="filtroPresentacion">{{item}}</span>
+                  </md-item-template>
+              </md-autocomplete>
+          </div>
+          <div class="form-group">
+              <md-autocomplete 
+                md-selected-item-change="ctrl.medico = item" 
+                md-search-text-change="ctrl.filtrarMedicos(filtroMedicos)" 
+                md-selected-item-change="buttonCtrl.scope.$evalAsync(buttonCtrl.focus)" 
+                md-no-cache="true" 
+                tabindex="3" 
+                md-min-length="0"
+                md-init="medicosCtrl = $mdAutocompleteCtrl"
+                placeholder="Seleccionar Medico"
+                md-item-text="item.toString()"
+                md-search-text="filtroMedicos" 
+                md-items="item in ctrl.medicos | filter: filtroMedicos">
+                  <md-item-template>
+                      <span md-highlight-text="filtroMedicos">{{item}}</span>
+                  </md-item-template>
+              </md-autocomplete>
+          </div>
+      </div>
+      <div class="modal-footer">
+          <button type="submit" class="btn btn-warning" ng-click="ctrl.cancelar()">Cancelar</button>
+          <button type="submit" md-init="buttonCtrl = $mdAutocompleteCtrl" class="btn btn-success" tabindex="4" ng-click="ctrl.isValid() && ctrl.guardar()" ng-class="ctrl.isValid()?'':'disabled'">Guardar</button>
+      </div>
+  </form>
+</md-dialog>

@@ -1,0 +1,6 @@
+<div header current-id="ctrl.currentId" fechas="ctrl.fechas" id-changed="ctrl.idChanged(id)" no-es-hoy="ctrl.noEsHoy=$noEsHoy" date-changed="ctrl.onNewDate($date)"></div>
+<div table rows="ctrl.records" class="main-table flex-grow flex-shrink flex table overflow-auto"></div>
+<div class="btn-group" role="group">
+    <button class="btn btn-primary" ng-disabled="ctrl.noEsHoy" ng-click="ctrl.crearRegistro()">Crear registro</button>
+    <button class="btn btn-primary" ng-click="ctrl.bajarArchivo()">Bajar</button>
+</div>
