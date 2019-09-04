@@ -17,7 +17,7 @@ export class CrearRegistro {
   public medico: Medico;
   public id: number;
   public current: number = 1;
-  constructor(private $mdDialog: ng.material.IDialogService,remedios: Remedios, medicos: Medicos) {
+  constructor(private $mdDialog: ng.material.IDialogService, remedios: Remedios, medicos: Medicos) {
     remedios.listar()
       .then(this.cargarRegistros);
     medicos.listar().then(this.cargarMedicos)
@@ -25,18 +25,21 @@ export class CrearRegistro {
 
   isLoading() { return this.listaDeRemedios; }
 
-  seleccionado(remedio, ctrl: { scope: ng.IScope, focus: any }) {
+  seleccionado(remedio) {
     this.remedio = remedio;
     this.presentacion = '';
     this.filtrarPresentaciones('');
-    ctrl.scope.$evalAsync(ctrl.focus);
+  }
+
+  doNext(ctrl: { id: string, elm: HTMLElement }) {
+    setTimeout(() => { getElement(ctrl).focus(); }, 200);
   }
 
   guardar() {
     this.$mdDialog.hide(Registro.clone(this as Registro));
   }
 
- 
+
 
   isValid() {
     return this.remedio && this.presentacion && this.medico;
@@ -69,6 +72,13 @@ export class CrearRegistro {
   private cargarMedicos = (values: Medico[]) => {
     this.listaDeMedicos = values;
     this.filtrarMedicos('');
+  }
+}
+function getElement(ctrl: { id: string, elm: HTMLElement }) {
+  if (ctrl.id) {
+    return document.getElementById('input-' + ctrl.id);
+  } else {
+    return ctrl.elm;
   }
 }
 function pushTo(item: any) {

@@ -104,6 +104,12 @@ export class HeaderDirective {
     this.remedios.importar(ev.target.files.item(0));
   }
 
+  public abrirCarpeta() {
+    fetch('/api/abrir-carpeta', {
+      method: 'POST'
+    });
+  }
+
   private _tick = () => {
     setTimeout(this._tick, 3.6e6);
     const today = getToday();

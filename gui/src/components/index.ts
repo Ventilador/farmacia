@@ -14,9 +14,18 @@ config(angular.module('app', [
   'ngMaterial',
   'ui.bootstrap',
   'ng',
-  'ngSanitize',
-  'md.data.table'
-]).directive('mdInit', function () {
+  'ngSanitize'
+]).directive('customOnChange', function () {
+  return function (scope: ng.IScope, elm: JQLite, attrs) {
+    elm.on('change', trigger);
+    scope.$on('$destroy', function () {
+      elm.off('change', trigger);
+    });
+    function trigger(ev) {
+      scope.$eval(attrs.customOnChange, { $event: ev });
+    }
+  }
+}).directive('mdInit', function () {
   return {
     restrict: 'A',
     require: '?mdAutocomplete',
@@ -31,6 +40,7 @@ config(angular.module('app', [
             focus: function () {
               elm.focus();
             },
+            elm: elm[0],
             scope: scope.$evalAsync.bind(scope)
           }
         });

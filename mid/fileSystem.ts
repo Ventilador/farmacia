@@ -1,37 +1,52 @@
 import *as fs from 'fs';
 import { promisify } from 'util';
-const readFile = promisify(fs.readFile);
-const writeFile = promisify(fs.writeFile);
-const stat = promisify(fs.stat);
-const mkdir = promisify(fs.mkdir);
-const readdir = promisify(fs.readdir);
-const open = promisify(fs.open);
+import { join } from 'path';
+import { homedir } from 'os';
+import { Response } from 'express';
+const readFile = fixDirName(promisify(fs.readFile));
+const writeFile = fixDirName(promisify(fs.writeFile));
+const stat = fixDirName(promisify(fs.stat));
+const mkdir = fixDirName(promisify(fs.mkdir));
+const readdir = fixDirName(promisify(fs.readdir));
+const open = fixDirName(promisify(fs.open));
+
+export const folder = join(homedir(), 'farmacia');
+if (!fs.existsSync(folder)) {
+  fs.mkdirSync(folder);
+}
 
 
 export {
-    readFile, writeFile, stat, mkdir, readdir, open, createSafeReadStream, createWriteStream
+  readFile, writeFile, stat, mkdir, readdir, open, createSafeReadStream, createWriteStream
 }
 
 function createWriteStream(path: string) {
-    return fs.createWriteStream(path, {
-        encoding: 'utf8',
-        flags: 'w+'
-    });
+  return fs.createWriteStream(join(folder, path), {
+    encoding: 'utf8',
+    flags: 'w+'
+  });
 };
 
-function createSafeReadStream(file: string, response: any) {
-    open(file, fs.constants.W_OK)
-        .then(fd => fs.createReadStream(file as any, {
-            encoding: 'utf8',
-            fd: fd
-        }).pipe(response), returnEmpty(response));
+function createSafeReadStream(file: string, response: Response) {
+  return fs.createReadStream(join(folder, file), {
+    encoding: 'utf8'
+  }).on('close', response.end.bind(response))
+    .on('data', response.write.bind(response))
+    .on('error', return404(response));
 }
 
 
-function returnEmpty(req) {
-    return function () {
-        req.writeHead(200);
-        req.write('');
-        req.end();
-    }
+function return404(req) {
+  return function () {
+    req.writeHead(404);
+    req.end();
+  }
+}
+
+function fixDirName<T>(fn: T): T;
+function fixDirName<T>(fn: any): T {
+  return function (fileName, ...args) {
+    args.unshift(join(folder, fileName));
+    return fn.apply(this, args);
+  } as any;
 }

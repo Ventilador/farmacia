@@ -1,5 +1,4 @@
 const path = require('path');
-const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 const { CheckerPlugin } = require('awesome-typescript-loader');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HOST = 'localhost';
@@ -13,7 +12,6 @@ module.exports = {
     },
     plugins: [
         new CheckerPlugin(),
-        new OpenBrowserPlugin({ url: `http://${HOST}:${GUI_PORT}` }), // open default browser
         new HtmlWebpackPlugin({
             template: './gui/src/index.html',
             favicon: './gui/src/favicon.ico'
@@ -23,7 +21,7 @@ module.exports = {
         app: './gui/src/index.ts'
     },
     output: {
-        path: path.resolve(process.cwd(), './app'),
+        path: path.resolve(process.cwd(), './dist/gui'),
         filename: '[name].bundle.js',
         chunkFilename: '[name].bundle.js'
     },

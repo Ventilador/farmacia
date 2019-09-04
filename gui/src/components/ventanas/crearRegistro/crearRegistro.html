@@ -6,8 +6,9 @@
       <div class="modal-body">
           <div class="form-group">
               <md-autocomplete
+                md-autofocus
                 md-search-text-change="ctrl.filtrarRemedios(filtroRemedios)" 
-                md-selected-item-change="ctrl.seleccionado(item, presentacionesCtrl)" 
+                md-selected-item-change="ctrl.seleccionado(item);ctrl.doNext(presentacionesCtrl)" 
                 md-no-cache="true" 
                 tabindex="1" 
                 md-min-length="0"
@@ -23,9 +24,8 @@
           </div>
           <div class="form-group">
               <md-autocomplete
-                md-selected-item-change="ctrl.presentacion = item" 
+                md-selected-item-change="ctrl.presentacion = item;ctrl.doNext(medicosCtrl)" 
                 md-search-text-change="ctrl.filtrarPresentaciones(filtroPresentacion)" 
-                md-selected-item-change="medicosCtrl.scope.$evalAsync(medicosCtrl.focus)" 
                 md-no-cache="true" 
                 tabindex="2" 
                 md-min-length="0"
@@ -40,9 +40,8 @@
           </div>
           <div class="form-group">
               <md-autocomplete 
-                md-selected-item-change="ctrl.medico = item" 
+                md-selected-item-change="ctrl.medico = item;ctrl.doNext(buttonCtrl)" 
                 md-search-text-change="ctrl.filtrarMedicos(filtroMedicos)" 
-                md-selected-item-change="buttonCtrl.scope.$evalAsync(buttonCtrl.focus)" 
                 md-no-cache="true" 
                 tabindex="3" 
                 md-min-length="0"
