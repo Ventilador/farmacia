@@ -41,7 +41,7 @@
         "less-loader": "^4.1.0",
         "ng-annotate-loader": "^0.6.1",
         "open-browser-webpack-plugin": "0.0.5",
-        "papaparse": "^4.6.3",
+        "papaparse": "^5.2.0",
         "performant-ui-select": "github:Ventilador/performant-ui-select",
         "style-loader": "^0.23.1",
         "treekill": "^1.0.0",
